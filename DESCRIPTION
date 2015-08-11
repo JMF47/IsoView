@@ -8,7 +8,7 @@ License: What license is it under?
 LazyData: true
 
 Imports:
-	GenomicRanges
-	stringr
-	Biostrings
-	rtracklayer
+GenomicRanges
+stringr
+Biostrings
+rtracklayer
