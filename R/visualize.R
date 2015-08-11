@@ -12,7 +12,7 @@
 #' visualize()
 #' 
 visualize = function(gff, clust_count, file="plot.png"){
-      require("stringr"); require("rtracklayer"); require("GenomicRanges"); require("Biostrings")
+      require("stringr"); require("rtracklayer"); require("GenomicRanges")
       gr = import.gff(gff)
       gr_exon = gr[gr$type=="exon"]
       gr_list_input = split(gr_exon, gr_exon$group)
