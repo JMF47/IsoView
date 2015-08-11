@@ -18,7 +18,7 @@ visualize = function(gff, clust_count, file="plot.png"){
       gr_list_input = split(gr_exon, gr_exon$group)
       
       print(paste(Sys.time(), ": preprocessing")); flush.console()
-      cov = GenomicRanges::coverage(gr_list_input)[[1]]
+      cov = GenomicRanges::coverage(unlist(gr_list_input))
       extract = which(cov>0)
       extract_high = which(cov>length(gr_list_input)*0.1)
       chr = unique(seqnames(gr_list_input[[1]]))
