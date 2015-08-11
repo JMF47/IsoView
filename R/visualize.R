@@ -86,8 +86,8 @@ visualize = function(gff, clust_count, file="plot.png"){
       print(paste(Sys.time(), ": done")); flush.console()
 }
 
-# # GenomicRanges, stringr, Biostrings, rtracklayer
-# rm(list=ls())
-setwd("/Users/jackfu/Dropbox/2015_JackFu_PacBioSummer/Flora_FMR1")
-gff_file = "cleaned.gff"
-visualize(gff_file, clust_count=6, file="prototype.png")
+# # # GenomicRanges, stringr, Biostrings, rtracklayer
+# # rm(list=ls())
+# setwd("/Users/jackfu/Dropbox/2015_JackFu_PacBioSummer/Flora_FMR1")
+# gff_file = "cleaned.gff"
+# visualize(gff_file, clust_count=6, file="prototype.png")
