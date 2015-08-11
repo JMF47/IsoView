@@ -12,6 +12,7 @@
 #' visualize()
 #' 
 visualize = function(gff, clust_count, file="plot.png"){
+      require("stringr"); require("rtracklayer"); require("GenomicRanges"); require("Biostrings")
       gr = import.gff(gff)
       gr_exon = gr[gr$type=="exon"]
       gr_list_input = split(gr_exon, gr_exon$group)
@@ -87,6 +88,6 @@ visualize = function(gff, clust_count, file="plot.png"){
 
 # # GenomicRanges, stringr, Biostrings, rtracklayer
 # rm(list=ls())
-# setwd("/Users/jackfu/Dropbox/2015_JackFu_PacBioSummer/Flora_FMR1")
-# gff_file = "cleaned.gff"
-# visualize(gff_file, clust_count=6, file="prototype.png")
+setwd("/Users/jackfu/Dropbox/2015_JackFu_PacBioSummer/Flora_FMR1")
+gff_file = "cleaned.gff"
+visualize(gff_file, clust_count=6, file="prototype.png")
