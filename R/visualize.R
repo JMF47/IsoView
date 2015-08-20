@@ -87,7 +87,7 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
             widths = c(widths, sum(width(gr_subject)))
       }
       par(xpd=NA)
-      text(x = -(num_bins)/15, y = 0:(length(indx))-0.5, pos=3, cex=0.8, labels= c(indx, "Transcript ID"))
+      text(x = -(num_bins)/15, y = 0:(length(indx))-0.5, pos=3, cex=0.8, labels= c(indx, "Index"))
       text(x = num_bins*16/15, y = 0:(length(indx)+1)-0.5, pos=4, cex=0.8, labels=c(sum(width(gr_tract)), widths, "Width"))
       dev.off()
       print(paste(Sys.time(), ": done")); flush.console()
