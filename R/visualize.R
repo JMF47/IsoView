@@ -26,15 +26,20 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       gr_extract = reduce(GRanges(chr, range=IRanges(start=extract, end=extract)))
       gr_extract_high = reduce(GRanges(seqnames=chr, range=IRanges(extract_high, extract_high)))
       
-      print(1); flush.console()
-      
       gr_base = reduce(gr_exon)
+      print(1); flush.console()
       gr_subject = gr_extract_high
+      print(2); flush.console()
       gr_intron = setdiff(GRanges(seqname=chr, ranges = IRanges(start(gr_base), end(gr_base))), gr_subject)
+      print(3); flush.console()
       num_bins = length(gr_intron) + length(gr_subject)
+      print(4); flush.console()
       gr_exons = gr_subject; gr_exons$type = "exon"
+      print(5); flush.console()
       gr_introns = gr_intron; gr_introns$type="intron"
+      print(6); flush.console()
       gr_tract = c(gr_exons, gr_introns)
+      print(7); flush.console()
       gr_tract = gr_tract[order(start(gr_tract))]
       
       if(customGrouping==F){
