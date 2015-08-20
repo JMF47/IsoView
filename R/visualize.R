@@ -25,7 +25,7 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       gr_extract = reduce(GRanges(chr, range=IRanges(start=extract, end=extract)))
       gr_extract_high = reduce(GRanges(seqnames=chr, range=IRanges(extract_high, extract_high)))
       
-      gr_base = reduce(unlist(gr_list_input))
+      gr_base = reduce(gr_exon)
       gr_subject = gr_extract_high
       gr_intron = setdiff(GRanges(seqname=chr, ranges = IRanges(start(gr_base), end(gr_base))), gr_subject)
       num_bins = length(gr_intron) + length(gr_subject)
