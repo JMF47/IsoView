@@ -12,7 +12,7 @@
 #' visualize()
 #' 
 visualize = function(gff, clust_count, file="plot.png", customGrouping=F, grouping=NULL){
-      require("stringr"); require("rtracklayer")
+      require("stringr"); require("rtracklayer"); require("GenomicRanges")
       gr = import.gff(gff)
       gr_exon = gr[gr$type=="exon"]
       gr_list_input = split(gr_exon, gr_exon$group)
@@ -25,6 +25,8 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       chr = unique(seqnames(gr_list_input[[1]]))
       gr_extract = reduce(GRanges(chr, range=IRanges(start=extract, end=extract)))
       gr_extract_high = reduce(GRanges(seqnames=chr, range=IRanges(extract_high, extract_high)))
+      
+      print(1); flush.console()
       
       gr_base = reduce(gr_exon)
       gr_subject = gr_extract_high
