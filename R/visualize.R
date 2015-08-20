@@ -16,11 +16,12 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       gr = import.gff(gff)
       gr_exon = gr[gr$type=="exon"]
       gr_list_input = split(gr_exon, gr_exon$group)
+      isoform_count = length(unique(gr_exon$group))
       
       print(paste(Sys.time(), ": preprocessing")); flush.console()
       cov = base::as.vector(GenomicRanges::coverage(gr_exon)[[1]])
       extract = which(cov>0)
-      extract_high = base::as.vector(which(cov>length(gr_list_input)*0.1))
+      extract_high = which(cov>isoform_count*0.1)
       chr = unique(seqnames(gr_list_input[[1]]))
       gr_extract = reduce(GRanges(chr, range=IRanges(start=extract, end=extract)))
       gr_extract_high = reduce(GRanges(seqnames=chr, range=IRanges(extract_high, extract_high)))
