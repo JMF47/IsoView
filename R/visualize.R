@@ -11,7 +11,7 @@
 #' @examples
 #' visualize()
 #' 
-visualize = function(gff, clust_count, file="plot.png"){
+visualize = function(gff, clust_count, file="plot.png", customGrouping=F, grouping=NULL){
       require("stringr"); require("rtracklayer"); require("GenomicRanges")
       gr = import.gff(gff)
       gr_exon = gr[gr$type=="exon"]
@@ -34,29 +34,35 @@ visualize = function(gff, clust_count, file="plot.png"){
       gr_tract = c(gr_exons, gr_introns)
       gr_tract = gr_tract[order(start(gr_tract))]
       
-      print(paste(Sys.time(), ": computing distance")); flush.console()
-      stick = NULL
-      for(i in 1:length(gr_base)){stick=c(stick, seq(start(gr_base[i]), end(gr_base[i])))}
-      stick = GRanges(seqnames=chr, ranges =IRanges(start=stick, end=stick))
-      mat = matrix(unlist(lapply(gr_list_input, populateMatrix, stick)), ncol=length(stick), byrow=T)
-      mat = t(mat)
-      out <- matrix(NA, ncol = ncol(mat), nrow = ncol(mat))
-      colnames(out) <- colnames(mat)
-      rownames(out) <- colnames(mat)
-      for (i in 1:(ncol(mat))) {
-            for (j in 1:(ncol(mat))) {
-                  a <- mat[, i]
-                  b <- mat[, j]
-                  out[i, j] <- (sum(b, na.rm = TRUE) + sum(a, na.rm = TRUE) - 
-                                      2 * sum(a & b, na.rm = TRUE))/(sum(a, na.rm = TRUE) + 
-                                                                           sum(b, na.rm = TRUE) - sum(a & b, na.rm = TRUE))
+      if(customGrouping==F){
+            print(paste(Sys.time(), ": computing distance")); flush.console()
+            stick = NULL
+            for(i in 1:length(gr_base)){stick=c(stick, seq(start(gr_base[i]), end(gr_base[i])))}
+            stick = GRanges(seqnames=chr, ranges =IRanges(start=stick, end=stick))
+            mat = matrix(unlist(lapply(gr_list_input, populateMatrix, stick)), ncol=length(stick), byrow=T)
+            mat = t(mat)
+            out <- matrix(NA, ncol = ncol(mat), nrow = ncol(mat))
+            colnames(out) <- colnames(mat)
+            rownames(out) <- colnames(mat)
+            for (i in 1:(ncol(mat))) {
+                  for (j in 1:(ncol(mat))) {
+                        a <- mat[, i]
+                        b <- mat[, j]
+                        out[i, j] <- (sum(b, na.rm = TRUE) + sum(a, na.rm = TRUE) - 
+                                            2 * sum(a & b, na.rm = TRUE))/(sum(a, na.rm = TRUE) + 
+                                                                                 sum(b, na.rm = TRUE) - sum(a & b, na.rm = TRUE))
+                  }
             }
+            distance=out
+            clust = kmeans(distance, clust_count)
+            set.seed(1337)
+            cluster = clust$cluster
+            indx = order(cluster)
       }
-      distance=out
-      clust = kmeans(distance, clust_count)
-      set.seed(1337)
-      cluster = clust$cluster
-      indx = order(cluster)
+      else{
+            cluster=grouping
+            indx = 1:length(cluster)
+      }
       
       print(paste(Sys.time(), ": plotting")); flush.console()
       png(file, width = num_bins*80, height=length(indx)*15)
