@@ -20,7 +20,7 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       print(paste(Sys.time(), ": preprocessing")); flush.console()
       cov = base::as.vector(GenomicRanges::coverage(gr_exon)[[1]])
       extract = which(cov>0)
-      extract_high = as.vector(which(cov>length(gr_list_input)*0.1))
+      extract_high = base::as.vector(which(cov>length(gr_list_input)*0.1))
       chr = unique(seqnames(gr_list_input[[1]]))
       gr_extract = reduce(GRanges(chr, range=IRanges(start=extract, end=extract)))
       gr_extract_high = reduce(GRanges(seqnames=chr, range=IRanges(extract_high, extract_high)))
