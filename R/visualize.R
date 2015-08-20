@@ -18,8 +18,8 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       gr_list_input = split(gr_exon, gr_exon$group)
       
       print(paste(Sys.time(), ": preprocessing")); flush.console()
-      cov = coverage(unlist(gr_exon))[[1]]
-      extract = as.vector(cov>0)
+      cov = as.vector(coverage(unlist(gr_exon))[[1]])
+      extract = which(cov>0)
       extract_high = as.vector(which(cov>length(gr_list_input)*0.1)[[1]])
       chr = unique(seqnames(gr_list_input[[1]]))
       gr_extract = reduce(GRanges(chr, range=IRanges(start=extract, end=extract)))
