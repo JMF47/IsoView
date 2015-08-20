@@ -62,7 +62,7 @@ visualize = function(gff, clust_count, file="plot.png", customGrouping=F, groupi
       }
       else{
             cluster=grouping
-            indx = 1:length(cluster)
+            indx = order(cluster)
       }
       
       print(paste(Sys.time(), ": plotting")); flush.console()
